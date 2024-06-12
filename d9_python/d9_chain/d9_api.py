@@ -1,5 +1,5 @@
 
-from d9_python.d9_chain.chain_utils import D9Interface
+from d9_python.d9_chain.chain_interface import D9Interface
 from d9_chain.pallets.voting import Voting
 from substrateinterface import SubstrateInterface
 from substrateinterface import Keypair

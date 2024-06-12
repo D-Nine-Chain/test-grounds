@@ -1,4 +1,4 @@
-from d9_python.d9_chain.chain_utils import D9Interface
+from d9_python.d9_chain.chain_interface import D9Interface
 
 class Referrals:
      def __init__(self, chain_conn:D9Interface):
