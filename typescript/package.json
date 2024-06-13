@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@polkadot/api": "^11.0.3",
+    "dotenv": "^16.4.5"
+  },
+  "scripts": {
+    "node-votes": "ts-node src/nodeVotes.ts",
+    "change-name": "ts-node src/changeName.ts",
+    "lock-council": "ts-node src/councilLock.ts"
+  }
+}
