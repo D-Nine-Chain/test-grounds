@@ -1,6 +1,7 @@
-from d9_python.d9_chain.chain_interface import D9Interface
+from d9_chain.chain_interface import D9Interface
+from d9_chain.pallets.util_classes.pallet_base_classes import PalletExtrinsicsBase
 
-class Referrals:
+class ReferralsQueries:
      def __init__(self, chain_conn:D9Interface):
           self.chain_conn = chain_conn
 
@@ -45,3 +46,9 @@ class Referrals:
           """
           result = self.chain_conn.query('D9Referral', 'ReferralRelationships', [account_id])
           return result.value
+
+class  ReferralsExtrinsics(PalletExtrinsicsBase):
+     def __init__(self,chain_interface:D9Interface):
+          super.__init__(chain_interface,'D9Referral')
+     
+     

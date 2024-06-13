@@ -2,12 +2,11 @@ import os
 from d9_chain.chain_interface import D9Interface
 from d9_chain.types import Delegation
 from typing import List
-from d9_chain.pallets.util_classes.pallet_extrinsics_base import PalletExtrinsicsBase
+from d9_python.d9_chain.pallets.util_classes.pallet_base_classes import PalletQueriesBase, PalletExtrinsicsBase
 
-class Voting:
-	def __init__(self, chain_connection:D9Interface):
-		self.chain_conn = chain_connection
-		self.extrinsic = VotingExtrinsics(chain_connection)
+class VotingQueries(PalletQueriesBase):
+	def __init__(self, chain_interface:D9Interface):
+		super().__init__(chain_interface, 'D9NodeVoting')
 
 	def get_number_of_candidates(self):
 		"""
@@ -15,7 +14,7 @@ class Voting:
 		Returns:
 			int: number of candidates
 		"""
-		result = self.chain_conn.query('D9NodeVoting', 'CurrentNumberOfCandidatesNodes', [])
+		result = self.compose_query('CurrentNumberOfCandidatesNodes', [])
 		return result.value
 
 	def current_session_index(self):
@@ -24,7 +23,7 @@ class Voting:
 		Returns:
 			int: current session index
 		"""
-		result = self.chain_conn.query('D9NodeVoting', 'CurrentSessionIndex', [])
+		result = self.compose_query('CurrentSessionIndex',[])
 		return result.value
 
 	def validator_stats(self, validator_id:str):
@@ -33,7 +32,7 @@ class Voting:
 		Returns:
 			dict: validator stats
 		"""
-		result = self.chain_conn.query('D9NodeVoting', 'CurrentValidatorVoteStats', [validator_id])
+		result = self.compose_query('CurrentValidatorVoteStats', [validator_id])
 		return result.value
 
 	def get_node_accumulative_votes(self, node_id:str):
@@ -42,7 +41,7 @@ class Voting:
 		Returns:
 			dict: node accumulative votes
 		"""
-		result = self.chain_conn.query('D9NodeVoting', 'NodeAccumulativeVotes', [node_id])
+		result = self.compose_query('NodeAccumulativeVotes', [node_id])
 		return result.value
 
 	def get_node_metadata(self, node_id:str):
@@ -51,16 +50,16 @@ class Voting:
 		Returns:
 			dict: node metadata
 		"""
-		result = self.chain_conn.query('D9NodeVoting', 'NodeMetadata', [node_id])
+		result = self.compose_query('NodeMetadata', [node_id])	
 		return result.value
-	
+
 	def node_to_user_vote_totals(self, node_id:str, user_id:str | None = None):
 		"""
 		gets node to user vote totals
 		Returns:
 			list: (supporter_id, votes)	
 		"""
-		result = self.chain_conn.query_map('D9NodeVoting', 'NodeToUserVotesTotals')
+		result = self.chain_interface.query_map('D9NodeVoting', 'NodeToUserVotesTotals')
 		node_supporters = []
 		if user_id == None:
 			for node_user_tuple, votes  in result:
@@ -68,8 +67,7 @@ class Voting:
 					node_supporters.append((node_user_tuple[1].value, votes.value))
 			return node_supporters
 		else:
-			result = self.chain_conn.query('D9NodeVoting', 'NodeToUserVotesTotals', [node_id, user_id])
-			return [(user_id, result.value)]
+			result = self.compose_query('NodeToUserVotesTotals', [node_id, user_id])
 
 	def get_session_node_list(self, session_index:int):
 		"""
@@ -77,12 +75,13 @@ class Voting:
 		Returns:
 			list: nodes
 		"""
-		result = self.chain_conn.query('D9NodeVoting', 'SessionNodeList', [session_index])
+		result = self.compose_query('SessionNodeList', [session_index])
 		return result.value
 
 class VotingExtrinsics(PalletExtrinsicsBase):
-	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
+
+	def __init__(self,chain_interface:D9Interface):
+		super().__init__(chain_interface,'D9NodeVoting')
 
 	def add_voting_interest(self, beneficiary_voter, amount_to_burn):
 		"""
