@@ -1,9 +1,9 @@
 from d9_chain.chain_interface import D9Interface
-from d9_chain.pallets.util_classes.pallet_base_classes import PalletExtrinsicsBase
+from d9_chain.pallets.util_classes.pallet_base_classes import PalletExtrinsicsBase, PalletQueriesBase
 
-class ReferralsQueries:
-     def __init__(self, chain_conn:D9Interface):
-          self.chain_conn = chain_conn
+class ReferralsQueries(PalletQueriesBase):
+     def __init__(self, chain_interface:D9Interface):
+          super().__init__(chain_interface, 'D9Referral')
 
      def get_referral(self, account_id:str):
           """

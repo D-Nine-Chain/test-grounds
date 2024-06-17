@@ -13,7 +13,7 @@ class PalletExtrinsicsBase:
           self.pallet_name = pallet_name
 
      def compose_call(self, function_name:str, function_params:dict|None = None):
-          self.chain_conn.compose_call(
+          return self.chain_interface.compose_call(
                call_module=self.pallet_name,
                call_function = function_name,
                call_params=function_params
@@ -30,8 +30,8 @@ class PalletQueriesBase:
           self.pallet_name = pallet_name
 
      def compose_query(self, function_name:str, function_params:list):
-          self.chain_interface.compose_query(
-               call_module=self.pallet_name,
-               call_function=function_name,
-               call_params=function_params
+          return self.chain_interface.query(
+               module=self.pallet_name,
+               storage_function=function_name,
+               params=function_params
           )

@@ -1,9 +1,9 @@
-from d9_python.d9_chain.chain_interface import D9Interface
+from d9_chain.chain_interface import D9Interface
 from d9_chain.pallets.util_classes.pallet_base_classes import PalletExtrinsicsBase, PalletQueriesBase
 
 class BalancesQueries(PalletQueriesBase):
      def __init__(self, chain_interface:D9Interface):
-          super.__init__(chain_interface, 'Balances')
+          super().__init__(chain_interface, 'Balances')
 
      def get_balance(self, account_id:str):
           """
@@ -13,9 +13,7 @@ class BalancesQueries(PalletQueriesBase):
           Returns:
                float: balance
           """
-          result = self.chain_conn.query('System', 'Account', [account_id])
-
-          print (result)
+          result = self.chain_interface.query('System', 'Account', [account_id])
           return result['data']['free']
 
           
@@ -28,6 +26,7 @@ class BalancesQueries(PalletQueriesBase):
                list: locks
           """
           result = self.compose_query('Locks', [account_id])
+          print("result is ", result)
           return result.value
 
 class BalancesExtrinsics(PalletExtrinsicsBase):
