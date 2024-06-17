@@ -12,7 +12,7 @@ class PalletExtrinsicsBase:
           self.chain_interface = d9_interface
           self.pallet_name = pallet_name
 
-     def compose_call(self, function_name:str, function_params:dict):
+     def compose_call(self, function_name:str, function_params:dict|None = None):
           self.chain_conn.compose_call(
                call_module=self.pallet_name,
                call_function = function_name,

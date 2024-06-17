@@ -6,6 +6,7 @@
   "scripts": {
     "node-votes": "ts-node src/nodeVotes.ts",
     "change-name": "ts-node src/changeName.ts",
-    "lock-council": "ts-node src/councilLock.ts"
+    "lock-council": "ts-node src/lockProposals.ts",
+    "concluded-referendums": "ts-node src/concludedReferendums.ts"
   }
 }

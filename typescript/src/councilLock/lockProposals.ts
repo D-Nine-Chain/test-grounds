@@ -10,16 +10,16 @@ getLockProposals().subscribe((locProposals) => {
      process.exit(0);
 });
 
-function getLockProposals() {
+function getLockProposals(accountId?: string) {
      return getApi$().pipe(
           switchMap(
                (api) => {
-                    return api.query.councilLock.lockDecisionProposals.entries()
+                    return api.query.councilLock.lockDecisionProposals.entries(accountId)
                }
           ),
           map(
                (entries) => {
-                    return entries.map(([storageKey, codec]) => {
+                    return entries.map(([_, codec]) => {
                          return codec.toJSON()
                     })
                }

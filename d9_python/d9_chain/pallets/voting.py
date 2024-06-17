@@ -143,3 +143,13 @@ class VotingExtrinsics(PalletExtrinsicsBase):
 			GenericCall
    		"""
 		self.compose_call("RedistributeVotes", {'from': from_candidate, 'to': to_candidate})
+
+	def remove_candidacy(self, candidate_id:str):
+		"""
+		removes candidacy
+		Args:
+			candidate_id (str): candidate id
+		Returns:
+			GenericCall
+  		"""
+		self.compose_call("RemoveCandidacy")
