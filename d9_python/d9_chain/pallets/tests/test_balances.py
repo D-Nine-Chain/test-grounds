@@ -2,7 +2,10 @@ import os
 
 from d9_chain.pallets.balances import BalancesExtrinsics, BalancesQueries
 from d9_chain.chain_interface import D9Interface
+from substrateinterface import Keypair
+from substrateinterface.exceptions import SubstrateRequestException
 
+from d9_chain import chain_interface
 def init_balances():
      url = os.getenv('MAINNET_URL')
      chain_interface = D9Interface(url=url)
@@ -22,7 +25,24 @@ def test_get_locks():
 
 def init_ext_balances():
      #ext is short for extrinsics
-     return BalancesExtrinsics(os.getenv('MAINNET_URL'))
+     chain_interface = D9Interface(url=os.getenv('MAINNET_URL'))
+     return BalancesExtrinsics(chain_interface)
+ 
+balances_ext = init_ext_balances()
 
-balances_ext = init_ext_balances
-
+def test_make_key():
+     test_keypair = Keypair.create_from_uri('//PythonTest')
+     print("test keypair address ",test_keypair.ss58_address)
+     python_tester_balance = balances_queries.get_balance(test_keypair.ss58_address)      
+     print("python tester balance (in base units) ",python_tester_balance)
+     test_keypair_2 = Keypair.create_from_uri('//PythonTest2')
+     balances_ext = init_ext_balances()
+     generic_call = balances_ext.transfer(test_keypair_2.ss58_address, 10000)
+     chain_interface = D9Interface(url=os.getenv('MAINNET_URL'))
+     signed_extrinsic = chain_interface.create_signed_extrinsic(generic_call, test_keypair)
+     try:
+          receipt = chain_interface.submit_extrinsic(signed_extrinsic, wait_for_inclusion=True)
+          print("Extrinsic '{}' sent and included in block '{}'".format(receipt.extrinsic_hash, receipt.block_hash, receipt))
+     except SubstrateRequestException as e:
+          print("Failed to send: {}".format(e))
+     

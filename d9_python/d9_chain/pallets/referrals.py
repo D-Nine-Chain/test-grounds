@@ -49,6 +49,6 @@ class ReferralsQueries(PalletQueriesBase):
 
 class  ReferralsExtrinsics(PalletExtrinsicsBase):
      def __init__(self,chain_interface:D9Interface):
-          super.__init__(chain_interface,'D9Referral')
+          super().__init__(chain_interface,'D9Referral')
      
      

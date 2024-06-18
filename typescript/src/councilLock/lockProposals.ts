@@ -14,7 +14,7 @@ function getLockProposals(accountId?: string) {
      return getApi$().pipe(
           switchMap(
                (api) => {
-                    return api.query.councilLock.lockDecisionProposals.entries(accountId)
+                    return api.query.councilLock.lockDecisionProposals.entries()
                }
           ),
           map(

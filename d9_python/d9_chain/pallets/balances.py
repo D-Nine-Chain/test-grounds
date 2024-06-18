@@ -31,7 +31,7 @@ class BalancesQueries(PalletQueriesBase):
 
 class BalancesExtrinsics(PalletExtrinsicsBase):
      def __init__(self, chain_interface:D9Interface):
-          super.__init__(chain_interface, 'Balances')
+          super().__init__(chain_interface, 'Balances')
 
      def transfer(self,recipient:str, amount:int):
           """

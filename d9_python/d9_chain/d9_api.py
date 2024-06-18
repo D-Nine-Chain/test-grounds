@@ -6,9 +6,9 @@ from substrateinterface import Keypair
 from d9_chain.pallets.balances import BalancesQueries
 
 class D9Api:
-     def __init__(self,chain_conn:SubstrateInterface):
-          self.voting = VotingQueries(chain_conn)
-          self.balances = BalancesQueries(chain_conn)
+     def __init__(self,chain_interface:SubstrateInterface):
+          self.chain_conn = chain_interface
+          
 
      def create_new_key_pair(self):
          mnemonic = Keypair.generate_mnemonic() 
