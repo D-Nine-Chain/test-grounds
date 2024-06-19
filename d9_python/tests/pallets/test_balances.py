@@ -1,11 +1,9 @@
 import os
-
 from d9_chain.pallets.balances import BalancesExtrinsics, BalancesQueries
-from d9_chain.chain_interface import D9Interface
-from substrateinterface import Keypair
+from d9_chain.utils.chain_interface import D9Interface
+from d9_chain.keypair.d9_key_pair import D9Keypair
 from substrateinterface.exceptions import SubstrateRequestException
 
-from d9_chain import chain_interface
 def init_balances():
      url = os.getenv('MAINNET_URL')
      chain_interface = D9Interface(url=url)
@@ -30,12 +28,12 @@ def init_ext_balances():
  
 balances_ext = init_ext_balances()
 
-def test_make_key():
-     test_keypair = Keypair.create_from_uri('//PythonTest')
+def test_transfer():
+     test_keypair = D9Keypair.create_from_uri('//PythonTest')
      print("test keypair address ",test_keypair.ss58_address)
      python_tester_balance = balances_queries.get_balance(test_keypair.ss58_address)      
      print("python tester balance (in base units) ",python_tester_balance)
-     test_keypair_2 = Keypair.create_from_uri('//PythonTest2')
+     test_keypair_2 = D9Keypair.create_from_uri('//PythonTest2')
      balances_ext = init_ext_balances()
      generic_call = balances_ext.transfer(test_keypair_2.ss58_address, 10000)
      chain_interface = D9Interface(url=os.getenv('MAINNET_URL'))

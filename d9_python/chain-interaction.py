@@ -1,9 +1,5 @@
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
-from d9_chain.chain_interface import D9Interface
+import d9_chain
 
 
-d9_chain_interface = D9Interface(url=os.getenv('MAINNET_URL'))
+
 

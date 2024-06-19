@@ -1,4 +1,4 @@
-from d9_chain.chain_interface import D9Interface
+from d9_chain.utils.chain_interface import D9Interface
 from d9_chain.pallets.util_classes.pallet_base_classes import PalletExtrinsicsBase, PalletQueriesBase
 
 class BalancesQueries(PalletQueriesBase):

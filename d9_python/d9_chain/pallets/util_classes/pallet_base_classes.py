@@ -1,5 +1,5 @@
 
-from d9_chain.chain_interface import D9Interface
+from d9_chain.utils.chain_interface import D9Interface
 
 
 class PalletExtrinsicsBase:
