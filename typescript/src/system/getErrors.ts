@@ -16,7 +16,7 @@ getError(21, 2).subscribe((errors) => {
 	process.exit(0);
 });
 
-function getError(moduleIndex: number, errorIndex: number) {
+function getError(moduleIndex: number | string, errorIndex: number | string) {
 	return getApi$().pipe(
 		switchMap((api) => {
 			return api.rpc.state.getMetadata().pipe(

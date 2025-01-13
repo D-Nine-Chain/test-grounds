@@ -13,7 +13,7 @@ getLockProposals().subscribe((locProposals) => {
 function getLockProposals(accountId?: string) {
 	return getApi$().pipe(
 		switchMap((api) => {
-			return api.query.councilLock.lockDecisionProposals.entries();
+			return api.query.councilLock.proposals.entries();
 		}),
 		map((entries) => {
 			return entries.map(([_, codec]) => {

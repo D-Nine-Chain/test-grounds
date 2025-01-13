@@ -12,7 +12,7 @@ function getConcludedReferendums(sessionIndex?: number) {
      return getApi$().pipe(
           switchMap(
                (api) => {
-                    return api.query.councilLock.concludedLockReferendums.entries()
+                    return api.query.councilLock.resolutions.entries()
                }
           ),
           map(
